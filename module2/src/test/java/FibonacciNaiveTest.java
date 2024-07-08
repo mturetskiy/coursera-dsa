@@ -48,9 +48,18 @@ class FibonacciNaiveTest {
 
     @Test
     void testBigFib() {
-        int i = 114;
+        long start = System.currentTimeMillis();
+        int i = 350000;
         BigInteger res = fibCalc.calcFibonacciWithTableLong(i);
-        System.out.println(i + " => " + res);
+        System.out.println(i + " => " + res + ", \ntime: " + (System.currentTimeMillis() - start));
+    }
+
+    @Test
+    void testBigFibFast() {
+        long start = System.currentTimeMillis();
+        int i = 350000;
+        BigInteger res = fibCalc.calcFibonacciFast(i);
+        System.out.println(i + " => " + res + ", \ntime: " + (System.currentTimeMillis() - start));
     }
 
     @Test

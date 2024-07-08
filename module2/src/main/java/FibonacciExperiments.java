@@ -41,6 +41,23 @@ public class FibonacciExperiments {
         return prev[n];
     }
 
+    public BigInteger calcFibonacciFast(int n) {
+        if (n == 0) {
+            return BigInteger.ZERO;
+        }
+
+        BigInteger prev2 = BigInteger.ZERO;
+        BigInteger prev1 = BigInteger.ONE;
+
+        for (int i = 1; i < n; i++) {
+            BigInteger val = prev2.add(prev1);
+            prev2 = prev1;
+            prev1 = val;
+        }
+
+        return prev1;
+    }
+
     public int calcLastFibNumber(int n) {
         if (n <= 1) {
             return 1;
