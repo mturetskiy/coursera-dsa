@@ -1,3 +1,5 @@
+package my;
+
 import java.math.BigInteger;
 
 public class FibonacciExperiments {
@@ -91,5 +93,24 @@ public class FibonacciExperiments {
             prevModVal[i] = mod;
         }
         return prevModVal[n];
+    }
+
+    public static long fibSumLastDigit(long n) {
+        if (n < 2) {
+            return (int) n;
+        }
+
+        long prev = 0;
+        long current = 1;
+        long sum = 1;
+
+        for (long i = 2; i <= n; i++) {
+            long tmp = prev + current;
+            prev = current;
+            current = tmp;
+            sum += current;
+        }
+
+        return sum % 10;
     }
 }

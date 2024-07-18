@@ -1,24 +1,26 @@
 import java.util.Scanner;
 
-public class GCD {
-    private static int calcGcd(int a, int b) {
+public class LCM {
+    private static long calcLcm(int a, int b) {
+        // first calc gcd:
         int newA = a;
         int newB = b;
-
         while (newB != 0) {
             int tmp = newA % newB;
             newA = newB;
             newB = tmp;
         }
 
-        return newA;
+        int gcd = newA;
+
+        return (long) a / gcd * b;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int a = scanner.nextInt();
         int b = scanner.nextInt();
-        int gcd = calcGcd(a, b);
-        System.out.println(gcd);
+        long lcm = calcLcm(a, b);
+        System.out.println(lcm);
     }
 }
