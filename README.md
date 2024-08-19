@@ -1,5 +1,5 @@
 # coursera-dsa
-Project with code written for Algorithms and Data Structures course on Coursera (by Princenton)
+Project with code written for Algorithms and Data Structures course on Coursera (by University of California San Diego)
 
 # preparation steps:
 1. To build the project specific algs4.jar library is required to be available for maven.
