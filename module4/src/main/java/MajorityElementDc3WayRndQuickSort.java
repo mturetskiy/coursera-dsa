@@ -1,20 +1,30 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Random;
+import java.util.StringTokenizer;
 
-public class MajorityElementDC {
-    private static int getMajorityElement(int[] a) {
+public class MajorityElementDc3WayRndQuickSort {
+    private static final Random rnd = new Random(System.currentTimeMillis());
+
+    public static int getMajorityElement(int[] a) {
+        if (a.length == 0) {
+            return -1;
+        }
+
         // Sort:
+        quickSort(a, 0, a.length - 1);
 
-        int[] sorted = mergeSort(a, 0, a.length - 1);
 
         // take median:
-        int midIdx = sorted.length / 2;
-        int midValStart = getStartPosForElement(sorted, midIdx);
-        int midValEnd = getEndPosForElement(sorted, midIdx);
+        int midIdx = a.length / 2;
+        int midValStart = getStartPosForElement(a, midIdx);
+        int midValEnd = getEndPosForElement(a, midIdx);
         int length = midValEnd - midValStart + 1;
 
         if (length > a.length / 2) {
-            return sorted[midIdx];
+            return a[midIdx];
         }
 
         return -1;
@@ -66,60 +76,44 @@ public class MajorityElementDC {
         return endPos;
     }
 
-    public static void selectionSort(int[] a) {
-        for (int i = 0; i < a.length; i++) {
-            // find min in the rest:
-            int minIdx = i;
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[j] < a[minIdx]) {
-                    minIdx = j;
-                }
-            }
-
-            if (minIdx != i) { // found something to swap
-                swap(a, i, minIdx);
-            }
-        }
+    public static void quickSort(int[] a) {
+        quickSort(a, 0, a.length - 1);
     }
 
-    public static int[] mergeSort(int[] a, int left, int right) {
-        if (left == right) {
-            return new int[] {a[left]};
+    private static void quickSort(int[] a, int l, int r) {
+        if (l >= r) {
+            return;
         }
 
-        int mid = left + (right - left) / 2;
-        int[] leftPart = mergeSort(a, left, mid);
-        int[] rightPart = mergeSort(a, mid + 1, right);
-        return merge(leftPart, rightPart);
+        int[] p = partition(a, l, r);
+        quickSort(a, l, p[0] - 1);
+        quickSort(a, p[1] + 1, r);
     }
 
-    private static int[] merge(int[] left, int[] right) {
-        int[] res = new int[left.length + right.length];
+    public static int[] partition(int[] a, int l, int r) {
+        int rndPivot = rnd.nextInt(l, r + 1);
+        swap(a,rndPivot,r);
+        int p = a[r];
 
-        int lIdx = 0;
-        int rIdx = 0;
-        int resIdx = 0;
-        while (resIdx < res.length) {
-            if (lIdx < left.length && rIdx < right.length) {
-                if (left[lIdx] < right[rIdx]) {
-                    res[resIdx++] = left[lIdx];
-                    lIdx++;
-                } else {
-                    res[resIdx++] = right[rIdx];
-                    rIdx++;
+        int q1 = l; // left pos of mid part (eq to pivot)
+        int q2 = l; // left pos of high part (greater than pivot)
+        for (int i = l; i < r; i++) {
+            if (a[i] < p) {
+                swap(a, i, q1); // swap current smaller elem with
+                if (a[i] == p) { // 1st element of mid section was moved
+                    swap(a, i, q2);
                 }
-            } else if (lIdx < left.length) {
-                res[resIdx++] = left[lIdx];
-                lIdx++;
-            } else {
-                res[resIdx++] = right[rIdx];
-                rIdx++;
+                q1++;
+                q2++;
+
+            } else if (a[i] == p) {
+                swap(a, i, q2);
+                q2++;
             }
-
-
         }
 
-        return res;
+        swap(a, q2, r);
+        return new int[] {q1, q2};
     }
 
     private static void swap(int[] a, int idxA, int idxB) {

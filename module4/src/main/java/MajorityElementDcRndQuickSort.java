@@ -2,13 +2,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Random;
 import java.util.StringTokenizer;
 
-public class MajorityElementDcQs {
-    private static int getMajorityElement(int[] a) {
-        // Sort:
+public class MajorityElementDcRndQuickSort {
+    private static final Random rnd = new Random(System.currentTimeMillis());
 
-        quickSort(a, 0, a.length - 1);
+    public static int getMajorityElement(int[] a) {
+        if (a.length == 0) {
+            return -1;
+        }
+
+        // Sort:
+        quickSort(a);
 
         // take median:
         int midIdx = a.length / 2;
@@ -69,9 +75,13 @@ public class MajorityElementDcQs {
         return endPos;
     }
 
-    public static void quickSort(int[] a, int l, int r) {
+    public static void quickSort(int[] a) {
+        quickSort(a, 0, a.length - 1);
+    }
+
+    private static void quickSort(int[] a, int l, int r) {
         if (l >= r) {
-           return;
+            return;
         }
 
         int p = partition(a, l, r);
@@ -80,20 +90,19 @@ public class MajorityElementDcQs {
     }
 
     private static int partition(int[] a, int l, int r) {
-        int p = r; // pivot
-        int q = l;
+        int rndPivot = rnd.nextInt(l, r + 1);
+        swap(a,rndPivot,r);
+
+        int q = l; // left pos of high part (greater than pivot)
 
         for (int i = l; i < r; i++) {
-            if (a[i] <= a[p]) {
+            if (a[i] <= a[r]) {
                 swap(a, i, q); // swap current smaller elem with
                 q++;
             }
         }
 
-        if (a[q] > a[p]) {
-            swap(a, q, p);
-        }
-
+        swap(a, q, r);
         return q;
     }
 

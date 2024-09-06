@@ -1,7 +1,12 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
-public class MajorityElement {
+public class MajorityElementMap {
     private static int getMajorityElement(int[] a, int left, int right) {
         if (left == right || left + 1 == right) {
             return -1;
