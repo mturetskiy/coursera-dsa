@@ -108,21 +108,9 @@ public class MajorityElementDcMergeSort {
                 res[resIdx++] = right[rIdx];
                 rIdx++;
             }
-
-
         }
 
         return res;
-    }
-
-    private static void swap(int[] a, int idxA, int idxB) {
-        if (idxA == idxB) {
-            return;
-        }
-
-        int tmp = a[idxA];
-        a[idxA] = a[idxB];
-        a[idxB] = tmp;
     }
 
     public static void main(String[] args) {

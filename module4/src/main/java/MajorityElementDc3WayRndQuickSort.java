@@ -14,8 +14,7 @@ public class MajorityElementDc3WayRndQuickSort {
         }
 
         // Sort:
-        quickSort(a, 0, a.length - 1);
-
+        quickSort(a);
 
         // take median:
         int midIdx = a.length / 2;
