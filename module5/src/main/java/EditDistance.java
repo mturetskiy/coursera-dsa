@@ -4,22 +4,25 @@ class EditDistance {
     public static int calculateEditDistance(String s, String t) {
         int sLen = s.length();
         int tLen = t.length();
-        int len = Math.max(sLen, tLen);
+//        int len = Math.max(sLen, tLen);
 
-        Node[][] distances = new Node[len + 1][len + 1];
+        Node[][] distances = new Node[sLen + 1][tLen + 1];
+
+
 
         // initialize 1st row for empty chars:
-        for (int r = 0; r <= len; r++) {
+
+        for (int r = 0; r <= sLen; r++) {
             distances[r][0] = new Node(r, Mode.none);
         }
 
-        for (int c = 0; c <= len; c++) {
+        for (int c = 0; c <= tLen; c++) {
             distances[0][c] = new Node(c, Mode.none);
         }
 
         // calculate real distances for each chars:
-        for (int r = 1; r <= len; r++) {
-            for (int c = 1; c <= len; c++) {
+        for (int r = 1; r <= sLen; r++) {
+            for (int c = 1; c <= tLen; c++) {
                 int matchCost = calcMatchCost(s, t, r, c);
                 Node dMatch = new Node(distances[r - 1][c - 1].cost + matchCost, Mode.match);
                 Node dIns = new Node(distances[r][c - 1].cost + 1, Mode.insert);
@@ -36,7 +39,7 @@ class EditDistance {
             }
         }
 
-//        printMatrix(distances);
+        printMatrix(distances);
 
         // to convert from s -> t:
         int dRow = s.length(); // 0th row is when s is empty
@@ -94,11 +97,14 @@ class EditDistance {
     public static void main(String args[]) {
         Scanner scan = new Scanner(System.in);
 
-        String s = scan.next();
-        String t = scan.next();
+//        String s = scan.next();
+//        String t = scan.next();
 
 //        String s = "thou shalt";
 //        String t = "you should";
+
+        String s = "thou shalt";
+        String t = "you";
 
 //        String s = "ABC";
 //        String t = "A";
